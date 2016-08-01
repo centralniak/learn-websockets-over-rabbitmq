@@ -21,8 +21,22 @@
         try {
             var client = Stomp.client('ws://127.0.0.1:15674/ws');
             updateHere('Just initialized websocket client');
+
+            client.connect('guest', 'guest', function () {
+                updateHere('Successfully connected to WS');
+
+                client.heartbeat.outgoing = 2000;
+                client.heartbeat.incoming = 2000;
+
+                client.send('/queue/ws_in', {}, 'Hello from JavaScript');
+                updateHere('Just sent a message to RabbitMQ');
+            }, function () {
+                updateHere('Error connecting to WS');
+            })
+
         } catch (e) {
-            updateHere('Error intializing Stomp client');
+            updateHere('Error - see logs for details');
+            console.error(e);
         }
     </script>
 </body>
