@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Websocket over RabbitMQ example.</h1>
+    <div id="here"></div>
+
+    <script type="text/javascript" src="build/stomp.js"></script>
+    <script type="text/javascript">
+        var elHere = window.document.getElementById('here');
+
+        function updateHere(message) {
+            window.elHere.innerHTML = window.elHere.innerHTML + '<p>' + message + '</p>';
+        }
+
+        updateHere('Initalizing...');
+
+        try {
+            var client = Stomp.client('ws://127.0.0.1:15674/ws');
+            updateHere('Just initialized websocket client');
+        } catch (e) {
+            updateHere('Error intializing Stomp client');
+        }
+    </script>
+</body>
+</html>
