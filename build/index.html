@@ -30,6 +30,10 @@
 
                 client.send('/queue/ws_in', {}, 'Hello from JavaScript');
                 updateHere('Just sent a message to RabbitMQ');
+
+                client.subscribe('/queue/ws_out', function (message) {
+                    updateHere('Received >> ' + message.body);
+                })
             }, function () {
                 updateHere('Error connecting to WS');
             })
